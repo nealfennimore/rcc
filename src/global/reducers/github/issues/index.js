@@ -6,8 +6,7 @@ import {
 
 const INITIAL_STATE = {
     isFetching: false,
-    items: [],
-    byId: [],
+    byRepoId: {},
 };
 
 export default function issues( state = INITIAL_STATE, action ) {
@@ -20,11 +19,10 @@ export default function issues( state = INITIAL_STATE, action ) {
     case FETCH_ISSUES_SUCCESS:
         return {
             ...state,
-            allIds: action.payload.map( ( item ) => item.id ),
-            byId: action.payload.reduce( ( acc, item ) => {
-                acc[item.id] = item;
-                return acc;
-            }, {} ),
+            byRepoId: {
+                ...state.byRepoId,
+                [action.payload.repoId]: action.payload.issues,
+            },
             isFetching: false,
         };
     case FETCH_ISSUES_ERROR:

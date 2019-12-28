@@ -1,10 +1,17 @@
 /* eslint-disable import/prefer-default-export */
-import { call, select, put } from 'redux-saga/effects';
+import {
+    call, select, put, takeLatest,
+} from 'redux-saga/effects';
 import * as github from 'global/services/github';
 import * as user from 'global/selectors/user';
 
-import { fetchRepos, fetchReposSuccess, fetchReposError } from 'global/actions/github/repos';
-import { fetchIssues, fetchIssuesSuccess, fetchIssuesError } from 'global/actions/github/issues';
+import { getRepoItems } from 'global/selectors/github/repos';
+import {
+    fetchReposSuccess, fetchReposError, FETCH_REPOS,
+} from 'global/actions/github/repos';
+import {
+    fetchIssuesSuccess, fetchIssuesError, FETCH_ISSUES,
+} from 'global/actions/github/issues';
 
 
 export function* getEncodedToken() {
@@ -14,7 +21,6 @@ export function* getEncodedToken() {
 }
 
 export function* getUserRepos() {
-    yield put( fetchRepos() );
     try {
         const token = yield call( getEncodedToken );
         const repos = yield call( github.getUserRepos, token );
@@ -24,13 +30,21 @@ export function* getUserRepos() {
     }
 }
 
-export function* getRepoIssues( repoFullPath ) {
-    yield put( fetchIssues() );
+export function* getRepoIssues( action ) {
     try {
+        const { repoId } = action.payload;
+        const repos = yield select( getRepoItems );
+        // eslint-disable-next-line camelcase
+        const { full_name } = repos[repoId];
         const token = yield call( getEncodedToken );
-        const issues = yield call( github.getRepoIssues, token, repoFullPath );
-        yield put( fetchIssuesSuccess( issues ) );
+        const issues = yield call( github.getRepoIssues, token, full_name );
+        yield put( fetchIssuesSuccess( { repoId, issues } ) );
     } catch ( error ) {
         yield put( fetchIssuesError( error ) );
     }
+}
+
+export default function* main() {
+    yield takeLatest( FETCH_REPOS, getUserRepos );
+    yield takeLatest( FETCH_ISSUES, getRepoIssues );
 }

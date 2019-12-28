@@ -6,7 +6,7 @@ import {
 
 const INITIAL_STATE = {
     isFetching: false,
-    items: [],
+    allIds: [],
     byId: [],
 };
 
