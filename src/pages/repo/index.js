@@ -23,6 +23,16 @@ export class Repo extends Component {
     }
 
     componentDidMount() {
+        this.fetchIssues();
+    }
+
+    componentDidUpdate( prevProps ) {
+        if ( prevProps?.match?.params?.id !== this.props?.match?.params?.id ) {
+            this.fetchIssues();
+        }
+    }
+
+    fetchIssues() {
         if ( ! this.props?.issues && ! this.props.isFetching ) {
             this.props.fetchIssues();
         }
