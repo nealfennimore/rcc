@@ -1,12 +1,6 @@
 import { combineReducers } from 'redux';
-
-function example( state = {}, action ) {
-    switch ( action.type ) {
-    default:
-        return state;
-    }
-}
+import user from './user';
 
 export default () => combineReducers( {
-    example,
+    user,
 } );
