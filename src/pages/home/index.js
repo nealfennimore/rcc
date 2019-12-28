@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Button from 'global/components/button';
 
 const Home = ( props ) => (
     <main>
-        <Button>
-            Home page
-        </Button>
+        <Link to="/repos">
+            Repos
+        </Link>
     </main>
 );
 
