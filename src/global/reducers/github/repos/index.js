@@ -20,8 +20,11 @@ export default function repos( state = INITIAL_STATE, action ) {
     case FETCH_REPOS_SUCCESS:
         return {
             ...state,
-            items: action.payload,
-            byId: action.payload.map( ( item ) => item.id ),
+            allIds: action.payload.map( ( item ) => item.id ),
+            byId: action.payload.reduce( ( acc, item ) => {
+                acc[item.id] = item;
+                return acc;
+            }, {} ),
             isFetching: false,
         };
     case FETCH_REPOS_ERROR:
