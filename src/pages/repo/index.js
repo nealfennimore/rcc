@@ -1,14 +1,17 @@
 /* eslint-disable react/static-property-placement */
 /* eslint-disable react/destructuring-assignment */
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getRepoById } from 'global/selectors/github/repos';
 import { getIssuesByRepoId, getIsFetching } from 'global/selectors/github/issues';
 import { fetchIssues } from 'global/actions/github/issues';
+import Layout from 'global/components/Layout';
+import Main from 'global/components/Main';
+import RepoSideBar from 'global/components/RepoSideBar';
 import Issues from './components/Issues';
 
-export class Repo extends PureComponent {
+export class Repo extends Component {
     static propTypes = {
         repo: PropTypes.shape( {
             name: PropTypes.string,
@@ -27,10 +30,17 @@ export class Repo extends PureComponent {
 
     render() {
         return (
-            <>
-                <h1>{this.props.repo.name}</h1>
-                <Issues issues={this.props.issues} />
-            </>
+            <Layout>
+                <RepoSideBar />
+                <Main>
+                    <header>
+                        <h1>{this.props.repo.name}</h1>
+                    </header>
+                    <section>
+                        <Issues issues={this.props.issues} isFetching={this.props.isFetching} />
+                    </section>
+                </Main>
+            </Layout>
         );
     }
 }

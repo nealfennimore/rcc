@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getRepos, getIsFetching } from 'global/selectors/github/repos';
+import Layout from 'global/components/Layout';
+import Main from 'global/components/Main';
+import RepoSideBar from 'global/components/RepoSideBar';
 
 const Repos = ( {
     repos,
@@ -13,17 +15,12 @@ const Repos = ( {
     }
 
     return (
-        <ul>
-            {
-                repos.map( ( repo ) => (
-                    <li key={repo.id}>
-                        <Link to={`/repos/${repo.id}`}>
-                            {repo.name}
-                        </Link>
-                    </li>
-                ) )
-            }
-        </ul>
+        <Layout>
+            <RepoSideBar />
+            <Main center>
+                <h1>Welcome</h1>
+            </Main>
+        </Layout>
     );
 };
 
