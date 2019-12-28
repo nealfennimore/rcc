@@ -9,24 +9,30 @@ const RepoSideBar = ( {
     repos,
     isFetching,
 } ) => {
-    if ( ! repos.length || isFetching ) {
-        return null;
-    }
-
     return (
         <aside className={styles.RepoSideBar}>
             <h2>Repos</h2>
-            <ul>
-                {
-                    repos.map( ( repo ) => (
-                        <li key={repo.id}>
-                            <Link to={`/repos/${repo.id}`}>
-                                {repo.name}
-                            </Link>
-                        </li>
-                    ) )
-                }
-            </ul>
+            {
+                isFetching && (
+                    'Loading...'
+                )
+            }
+
+            {
+                !! repos?.length && (
+                    <ul>
+                        {
+                            repos.map( ( repo ) => (
+                                <li key={repo.id}>
+                                    <Link to={`/repos/${repo.id}`}>
+                                        {repo.name}
+                                    </Link>
+                                </li>
+                            ) )
+                        }
+                    </ul>
+                )
+            }
         </aside>
     );
 };
