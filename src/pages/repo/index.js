@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getRepoById } from 'global/selectors/github/repos';
 import { getIssuesByRepoId, getIsFetching } from 'global/selectors/github/issues';
 import { fetchIssues } from 'global/actions/github/issues';
-import Issue from './components/Issue';
+import Issues from './components/Issues';
 
 export class Repo extends PureComponent {
     static propTypes = {
@@ -29,14 +29,7 @@ export class Repo extends PureComponent {
         return (
             <>
                 <h1>{this.props.repo.name}</h1>
-                <ul>
-                    {
-                        this.props?.issues?.map( ( issue ) => (
-                            // eslint-disable-next-line react/jsx-props-no-spreading
-                            <Issue key={issue.id} {...issue} />
-                        ) )
-                    }
-                </ul>
+                <Issues issues={this.props.issues} />
             </>
         );
     }

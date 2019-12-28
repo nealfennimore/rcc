@@ -1,5 +1,9 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import PropTypes from 'prop-types';
+import format from 'date-fns/format';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import styles from './styles.pcss';
 
 const Issue = ( {
     title,
@@ -7,18 +11,32 @@ const Issue = ( {
     updated_at,
     user,
 } ) => (
-    <li>
-        <h2>{title}</h2>
-        <img alt={user.login} src={user.avatar_url} />
-        <time datetime={created_at}>
-            {created_at}
+    <li className={styles.Issue}>
+        <div className={styles.header}>
+            <img alt={user.login} src={user.avatar_url} />
+            <h2>{title}</h2>
+        </div>
+        <time dateTime={created_at}>
+            Created at:
+            {' '}
+            { format( new Date( created_at ), 'M/d/yyyy' )}
         </time>
-        <time datetime={updated_at}>
-            {updated_at}
+        <time dateTime={updated_at}>
+            Last updated:
+            {' '}
+            {formatDistanceToNow( new Date( updated_at ) )}
         </time>
     </li>
 );
 
-Issue.propTypes = {};
+Issue.propTypes = {
+    title: PropTypes.string,
+    created_at: PropTypes.string,
+    updated_at: PropTypes.string,
+    user: PropTypes.shape( {
+        login: PropTypes.string,
+        avatar_url: PropTypes.string,
+    } ),
+};
 
 export default Issue;
