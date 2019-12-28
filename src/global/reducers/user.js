@@ -1,8 +1,8 @@
 import { SET_USERNAME, SET_TOKEN } from 'global/actions/user';
 
 const INITIAL_STATE = {
-    username: null,
-    token: null,
+    username: '',
+    token: '',
 };
 
 export default function user( state = INITIAL_STATE, action ) {
