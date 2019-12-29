@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main should match snapshot 1`] = `
+<main
+  className="Main"
+/>
+`;
+
+exports[`Main should match snapshot when centered 1`] = `
+<main
+  className="Main center"
+/>
+`;
