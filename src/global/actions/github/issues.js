@@ -8,3 +8,7 @@ export const fetchIssuesSuccess = createAction( FETCH_ISSUES_SUCCESS );
 
 export const FETCH_ISSUES_ERROR = 'FETCH_ISSUES_ERROR';
 export const fetchIssuesError = createAction( FETCH_ISSUES_ERROR );
+
+
+export const SET_SORT_ORDER = 'SET_SORT_ORDER';
+export const setSortOrder = createAction( SET_SORT_ORDER, ( repoId, issues ) => ( { repoId, issues } ) );

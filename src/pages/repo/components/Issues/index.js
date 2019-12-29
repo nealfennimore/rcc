@@ -1,26 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { SortableContainer } from 'react-sortable-hoc';
 import Issue from '../Issue';
 import styles from './styles.pcss';
 
 const Issues = ( {
     issues,
-    isFetching,
 } ) => {
-    if ( isFetching ) {
-        return 'Loading...';
-    }
-
-    if ( ! issues?.length ) {
-        return 'No issues';
-    }
-
     return (
         <ul className={styles.Issues}>
             {
-                issues?.map( ( issue ) => (
+                issues?.map( ( issue, index ) => (
                     // eslint-disable-next-line react/jsx-props-no-spreading
-                    <Issue key={issue.id} {...issue} />
+                    <Issue key={issue.id} {...issue} index={index} />
                 ) )
             }
         </ul>
@@ -29,7 +21,6 @@ const Issues = ( {
 
 Issues.propTypes = {
     issues: PropTypes.arrayOf( PropTypes.object ),
-    isFetching: PropTypes.bool,
 };
 
-export default Issues;
+export default SortableContainer( Issues );

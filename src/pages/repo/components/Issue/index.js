@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import { SortableElement } from 'react-sortable-hoc';
 import styles from './styles.pcss';
 
 const Issue = ( {
@@ -39,4 +40,4 @@ Issue.propTypes = {
     } ),
 };
 
-export default Issue;
+export default SortableElement( Issue );

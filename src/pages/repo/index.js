@@ -3,9 +3,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import arrayMove from 'array-move';
 import { getRepoById } from 'global/selectors/github/repos';
-import { getIssuesByRepoId, getIsFetching } from 'global/selectors/github/issues';
-import { fetchIssues } from 'global/actions/github/issues';
+import { getSortedIssuesByRepoId, getIsFetching } from 'global/selectors/github/issues';
+import { fetchIssues, setSortOrder } from 'global/actions/github/issues';
 import Layout from 'global/components/Layout';
 import Main from 'global/components/Main';
 import RepoSideBar from 'global/components/RepoSideBar';
@@ -20,6 +21,7 @@ export class Repo extends Component {
         issues: PropTypes.arrayOf( PropTypes.object ),
         isFetching: PropTypes.bool,
         fetchIssues: PropTypes.func,
+        setSortOrder: PropTypes.func,
     }
 
     componentDidMount() {
@@ -33,36 +35,48 @@ export class Repo extends Component {
     }
 
     fetchIssues() {
-        if ( ! this.props?.issues && ! this.props.isFetching ) {
+        if ( ! this.props?.issues?.length && ! this.props.isFetching ) {
             this.props.fetchIssues();
         }
     }
 
-    render() {
-        return (
-            <Layout>
-                <RepoSideBar />
-                <Main>
-                    <header>
-                        <h1>{this.props.repo.name}</h1>
-                    </header>
-                    <section>
-                        <Issues issues={this.props.issues} isFetching={this.props.isFetching} />
-                    </section>
-                </Main>
-            </Layout>
-        );
-    }
+      // eslint-disable-next-line react/sort-comp
+      onSortEnd = ( { oldIndex, newIndex } ) => {
+          this.props.setSortOrder(
+              arrayMove( this.props?.issues, oldIndex, newIndex ),
+          );
+      };
+
+      render() {
+          return (
+              <Layout>
+                  <RepoSideBar />
+                  <Main>
+                      <header>
+                          <h1>{this.props.repo.name}</h1>
+                      </header>
+                      <section>
+                          <Issues
+                              issues={this.props.issues}
+                              isFetching={this.props.isFetching}
+                              onSortEnd={this.onSortEnd}
+                          />
+                      </section>
+                  </Main>
+              </Layout>
+          );
+      }
 }
 
 const connector = connect(
     ( state, ownProps ) => ( {
         repo: getRepoById( state )( ownProps.match.params.id ),
-        issues: getIssuesByRepoId( state )( ownProps.match.params.id ),
+        issues: getSortedIssuesByRepoId( state )( ownProps.match.params.id ),
         isFetching: getIsFetching( state ),
     } ),
     ( dispatch, ownProps ) => ( {
         fetchIssues: () => dispatch( fetchIssues( ownProps.match.params.id ) ),
+        setSortOrder: ( issues ) => dispatch( setSortOrder( ownProps.match.params.id, issues ) ),
     } ),
 );
 
