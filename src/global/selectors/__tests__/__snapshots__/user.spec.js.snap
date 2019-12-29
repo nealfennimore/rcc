@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Selectors getToken 1`] = `"token"`;
+
+exports[`User Selectors getUsername 1`] = `"username"`;
