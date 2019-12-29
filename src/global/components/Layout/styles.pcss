@@ -79,4 +79,12 @@ ul {
             "main";
         grid-template-columns: 1fr;
     }
+
+    @media screen and (max-width: 640px) {
+        grid-template-columns: 0 2fr;
+        grid-template-areas:
+            "main main"
+            "main main"
+            "aside aside";
+    }
 }
