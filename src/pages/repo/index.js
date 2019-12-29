@@ -40,32 +40,50 @@ export class Repo extends Component {
         }
     }
 
-      // eslint-disable-next-line react/sort-comp
-      onSortEnd = ( { oldIndex, newIndex } ) => {
-          this.props.setSortOrder(
-              arrayMove( this.props?.issues, oldIndex, newIndex ),
-          );
-      };
+    // eslint-disable-next-line react/sort-comp
+    onSortEnd = ( { oldIndex, newIndex } ) => {
+        this.props.setSortOrder(
+            arrayMove( this.props?.issues, oldIndex, newIndex ),
+        );
+    };
 
-      render() {
-          return (
-              <Layout>
-                  <RepoSideBar />
-                  <Main>
-                      <header>
-                          <h1>{this.props.repo.name}</h1>
-                      </header>
-                      <section>
-                          <Issues
-                              issues={this.props.issues}
-                              isFetching={this.props.isFetching}
-                              onSortEnd={this.onSortEnd}
-                          />
-                      </section>
-                  </Main>
-              </Layout>
-          );
-      }
+    renderText() {
+        if ( this.props.isFetching ) {
+            return 'Loading...';
+        } if ( ! this.props?.issues?.length ) {
+            return 'No issues :(';
+        }
+        return null;
+    }
+
+    render() {
+        return (
+            <Layout>
+                <RepoSideBar />
+                <Main>
+                    <header>
+                        <h1>{this.props.repo.name}</h1>
+                    </header>
+
+                    <section>
+                        {
+                            this.renderText()
+                        }
+
+                        {
+                            !! this.props?.issues?.length && (
+                                <Issues
+                                    issues={this.props.issues}
+                                    isFetching={this.props.isFetching}
+                                    onSortEnd={this.onSortEnd}
+                                />
+                            )
+                        }
+                    </section>
+                </Main>
+            </Layout>
+        );
+    }
 }
 
 const connector = connect(
