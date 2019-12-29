@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getRepos, getIsFetching } from 'global/selectors/github/repos';
+import Loader from 'global/components/Loader';
 import styles from './styles.pcss';
 
 const RepoSideBar = ( {
@@ -14,7 +15,7 @@ const RepoSideBar = ( {
             <h2>Repos</h2>
             {
                 isFetching && (
-                    'Loading...'
+                    <Loader />
                 )
             }
 

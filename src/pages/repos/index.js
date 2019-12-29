@@ -27,7 +27,7 @@ export class Repos extends PureComponent {
             <Layout>
                 <RepoSideBar />
                 <Main center>
-                    <h1>{ this.props.isFetching ? 'Loading...' : 'Welcome'}</h1>
+                    <h1>Welcome</h1>
                 </Main>
             </Layout>
         );

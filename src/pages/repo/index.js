@@ -9,6 +9,7 @@ import { getSortedIssuesByRepoId, getIsFetching } from 'global/selectors/github/
 import { fetchIssues, setSortOrder } from 'global/actions/github/issues';
 import Layout from 'global/components/Layout';
 import Main from 'global/components/Main';
+import Loader from 'global/components/Loader';
 import RepoSideBar from 'global/components/RepoSideBar';
 import Issues from './components/Issues';
 
@@ -49,7 +50,7 @@ export class Repo extends Component {
 
     renderText() {
         if ( this.props.isFetching ) {
-            return 'Loading...';
+            return <Loader />;
         } if ( ! this.props?.issues?.length ) {
             return 'No issues :(';
         }
