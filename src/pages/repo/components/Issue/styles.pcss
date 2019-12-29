@@ -1,14 +1,21 @@
 .Issue {
     background: white;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
     margin: 0 15px 15px 0;
     padding: 30px;
     flex-basis: 300px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
 
     & .header {
         display: flex;
         align-items: center;
+
+        & > h2 {
+            margin-top: 0;
+        }
 
         & > img {
             min-width: 40px;
@@ -17,7 +24,10 @@
         }
     }
 
-    & > time {
-        display: block;
+    & .footer {
+
+        & > time {
+            display: block;
+        }
     }
 }

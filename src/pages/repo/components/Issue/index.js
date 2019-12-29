@@ -17,16 +17,18 @@ const Issue = ( {
             <img alt={user.login} src={user.avatar_url} />
             <h2>{title}</h2>
         </div>
-        <time dateTime={created_at}>
-            Created at:
-            {' '}
-            { format( new Date( created_at ), 'M/d/yyyy' )}
-        </time>
-        <time dateTime={updated_at}>
-            Last updated:
-            {' '}
-            {formatDistanceToNow( new Date( updated_at ) )}
-        </time>
+        <div className={styles.footer}>
+            <time dateTime={created_at}>
+                Created at:
+                {' '}
+                { format( new Date( created_at ), 'M/d/yyyy' )}
+            </time>
+            <time dateTime={updated_at}>
+                Last updated:
+                {' '}
+                {formatDistanceToNow( new Date( updated_at ) )}
+            </time>
+        </div>
     </li>
 );
 
